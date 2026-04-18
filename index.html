@@ -81,33 +81,34 @@
 
 			function syncToServer(){
 
-				var xmlhttp;
-			    
-			    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-			        xmlhttp = new XMLHttpRequest();
-			    }
-			    else {// code for IE6, IE5
-			        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-			    }
+    var xmlhttp;
 
-				xmlhttp.onreadystatechange = function() {
-				    if (this.readyState == 4 && this.status == 200) {
-				    	
-				        var responseText = this.responseText;
-				        //console.log("Response:"+responseText);
+    if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
 
-				        if(responseText !== "Data saved successfully")
-				        	document.getElementById("container").innerHTML = '<span class="spanWhite">Server went away. Please try again.</span>';
-				    }
-				};
-				//var getLookups = "saveTaps.php?id="+uniqueIdentifier+"&var="+dependentVariable+"&taps=["+tapLogsArray+"]";
-				var url = "saveTaps.php";
-				var params ="id="+uniqueIdentifier+"&var="+dependentVariable+"&taps=["+tapLogsArray+"]";
-				xmlhttp.open("POST",url,true);
-				xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-				xmlhttp.send(params);
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var responseText = this.responseText;
 
-			}
+            if(responseText !== "Data saved successfully"){
+                document.getElementById("container").innerHTML =
+                '<span class="spanWhite">Server went away. Please try again.</span>';
+            }
+        }
+    };
+
+    // 🔥 IMPORTANT CHANGE HERE
+    var url = "https://YOUR-RAILWAY-URL/saveTaps.php";
+
+    var params ="id="+uniqueIdentifier+"&var="+dependentVariable+"&taps=["+tapLogsArray+"]";
+
+    xmlhttp.open("POST",url,true);
+    xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xmlhttp.send(params);
+}
 
 			function tapityTap(tep){
 

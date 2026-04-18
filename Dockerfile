@@ -1,14 +1,10 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 
-# Copy files
-COPY . /var/www/html/
+# Set working directory
+WORKDIR /app
 
-# Fix Apache MPM issue (VERY IMPORTANT)
-RUN a2dismod mpm_event || true
-RUN a2dismod mpm_worker || true
-RUN a2enmod mpm_prefork
+# Copy all files
+COPY . .
 
-# Enable rewrite (optional)
-RUN a2enmod rewrite
-
-EXPOSE 80
+# Railway uses PORT environment variable
+CMD php -S 0.0.0.0:$PORT

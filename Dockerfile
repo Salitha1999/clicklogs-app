@@ -1,10 +1,10 @@
 FROM php:8.2-cli
 
-# Set working directory
 WORKDIR /app
 
-# Copy all files
 COPY . .
 
-# Railway uses PORT environment variable
+# Force fallback port if Railway PORT not set
+ENV PORT=8080
+
 CMD php -S 0.0.0.0:$PORT
